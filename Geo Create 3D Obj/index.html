@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" ref="style.css"/>
+    </head>
+    <body style="width: 100vw; height: 100vh; margin: 0; overflow: hidden;">
+        <script src="js/three.min.js"></script>
+        <script src="js/GLTFLoader.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script>
+            let scene, camera, renderer;
+
+            function init() {
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xdddddd);
+
+                camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 5000);
+                camera.rotation.y = 45/180*Math.PI;
+                camera.position.x = 10;
+                camera.position.y = 5;
+                camera.position.z = 10;
+
+                renderer = new THREE.WebGLRenderer({antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.toneMapping = THREE.ReinhardToneMapping;
+                renderer.toneMappingExposure = 2.3;
+                renderer.shadowMap.enabled = true;
+                document.body.appendChild(renderer.domElement);
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enablePan = false;
+                controls.maxDistance = 50;
+                controls.minDistance = 10;
+
+                /*hlight = new THREE.AmbientLight(0x404040, 100);
+                scene.add(hlight);*/
+
+                /*directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(1, 1, 1);
+                directionalLight.castShadow = true;
+                scene.add(directionalLight);*/
+
+                hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4);
+                scene.add(hemiLight);
+
+                spotLight1 = new THREE.SpotLight(0xffa95c, 4);
+                spotLight1.position.set(10, 10, 10);
+                spotLight1.castShadow = true;
+                scene.add(spotLight1);
+
+                spotLight2 = new THREE.SpotLight(0xffa95c, 4);
+                spotLight2.position.set(10, -10, 10);
+                spotLight2.castShadow = true;
+                scene.add(spotLight2);
+
+                let loader = new THREE.GLTFLoader();
+                loader.load('object/object.gltf', function(gltf) {
+                    model = gltf.scene.children[0];
+                    model.scale.set(1, 1, 1);
+                    model.traverse(n => {
+                        if(n.isMesh) {
+                            n.castShadow = true;
+                            n.receiveShadow = true;
+                        }
+                    });
+                    scene.add(gltf.scene);
+                    animate();
+                });
+            }
+
+            function animate() {
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            
+            init();
+        </script>
+    </body>
+</html>
