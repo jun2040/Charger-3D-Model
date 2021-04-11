@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="js/package/three.min.js"></script>
+        <script src="js/package/GLTFLoader.js"></script>
+        <script src="js/package/OrbitControls.js"></script>
+        <script src="js/package/tween.js"></script>
+        <script src="js/load/load_obj.js"></script>
+        <script src="js/load/load_light.js"></script>
+        <script src="js/load/load_translate.js"></script>
+        <script src="js/function/translate_obj.js"></script>
+        <script src="js/function/button.js"></script>
+        <script src="js/function/init.js"></script>
+        <script src="js/function/animate.js"></script>
+        <script src="js/function/center.js"></script>
+        <script src="js/listener/resize.js"></script>
+        <script src="js/listener/select.js"></script>
+    </head>
+    <body style="width: 100vw; height: 100vh; margin: 0; overflow: hidden;">
+        <div style="position: absolute; margin-left: 30px; padding: 0px;">
+            <h1 style="text-decoration: none;">Tank</h1>
+            <h2>Left click drag to orbit</h2>
+            <h2>Right click drag to pan</h2>
+            <h2>Scroll to zoom in and out</h2>
+            <button id="toggle" onclick="toggle()">Disassemble</button>
+        </div>
+        <script src="js/scene.js"></script>
+    </body>
+</html>
